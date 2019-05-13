@@ -11,6 +11,8 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
+$router->group(['middleware' => 'jwt.auth'], function () use ($router) {
+    $router->get('users','UserController@index');
+    $router->get('user/{id}','UserController@show');
 });
+$router->post('/auth/login','AuthController@auth');
