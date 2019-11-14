@@ -16,3 +16,7 @@ $router->group(['middleware' => 'jwt.auth'], function () use ($router) {
     $router->get('user/{id}','UserController@show');
 });
 $router->post('/auth/login','AuthController@auth');
+
+$router->get('/key', function () {
+    return str_random(32);
+});

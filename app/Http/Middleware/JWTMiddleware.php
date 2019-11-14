@@ -10,7 +10,7 @@ use Firebase\JWT\ExpiredException;
 class JWTMiddleware {
 
     public function handle($request, Closure $next, $guard = null){
-        $token = $request->query('token');
+        $token = $request->header('token');
 
         if(!$token){
             return response()->json([
@@ -23,6 +23,10 @@ class JWTMiddleware {
         } catch (ExpiredException $e){
             return response()->json([
                 'message' => 'Token expired!',
+            ], 400);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'invalid token',
             ], 400);
         }
 
